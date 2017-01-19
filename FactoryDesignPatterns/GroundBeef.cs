@@ -1,31 +1,19 @@
-﻿namespace FactoryDesignPatterns
+using static FactoryDesignPatterns.Helper;
+
+namespace FactoryDesignPatterns
 {
-    public enum Grade
+    public class GroundBeef : Beef
     {
-        Lean, Chuck, Medium
+        public override string Name { get; set; } = "Ground Beef";
     }
 
-    public abstract class GroundBeef
+    public class GroundBeefFactory : BeefFactory
     {
-        public abstract string Name { get; }
-        public abstract double Price { get; set; }
-    }
-
-    public class Lean : GroundBeef
-    {
-        public override string Name { get; } = "Lean Ground Beef";
-        public override double Price { get; set; } = 4.95;
-    }
-
-    public class Medium : GroundBeef
-    {
-        public override string Name { get; } = "Medium Ground Beef";
-        public override double Price { get; set; } = 3.49;
-    }
-
-    public class Chuck : GroundBeef
-    {
-        public override string Name { get; } = "Chuck Ground Beef";
-        public override double Price { get; set; } = 2.79;
+        public override Beef ProcessBeef()
+        {
+            Write("Cutting chuck section");
+            Write("Grinding");
+            return new GroundBeef();
+        }
     }
 }

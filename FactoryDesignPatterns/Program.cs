@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using static FactoryDesignPatterns.Helper;
 
 namespace FactoryDesignPatterns
@@ -7,24 +8,51 @@ namespace FactoryDesignPatterns
     {
         public static void Main()
         {
-            Set(new[] { Options.G, Options.Simple }, true);
+            Set(new[] { Options.G, Options.Method }, true);
 
-            var simpleFactory = new SimpleMeatFactory();
+            var groundBeefFactory = new GroundBeefFactory();
+            var steakFactory = new SteakFactory();
+            var roastFactory = new RoastFactory();
 
-            var chuckBeef = simpleFactory.GetMeat(Grade.Chuck);
-            var mediumBeef = simpleFactory.GetMeat(Grade.Medium);
-            var leanBeef = simpleFactory.GetMeat(Grade.Lean);
+            const int groundBeefOrder = 3;
+            const int steakOrder = 2;
+            const int roastOrder = 4;
 
-            Write($"The simple factory made: {chuckBeef.Name} for ${chuckBeef.Price}/lb\n");
+            var beefPile = new List<Beef>();
+            for (var i = 1; i <= groundBeefOrder; i++)
+            {
+                beefPile.Add(groundBeefFactory.ProcessBeef());
+            }
 
             Set(new[] { Options.C });
+            Console.WriteLine($"\nThe warehouse just processed {beefPile.Count} units of ground beef.\n");
 
-            Write($"The simple factory made: {mediumBeef.Name} for ${mediumBeef.Price}/lb\n");
+            Set(new[] { Options.G });
+            beefPile.Clear();
+
+            for (var i = 1; i <= steakOrder; i++)
+            {
+                beefPile.Add(steakFactory.ProcessBeef());
+            }
+
+            Set(new[] { Options.C });
+            Console.WriteLine($"\nThe warehouse just processed {beefPile.Count} units of steak.\n");
+
+            Set(new[] { Options.G });
+            beefPile.Clear();
+
+            for (var i = 1; i <= roastOrder; i++)
+            {
+                beefPile.Add(roastFactory.ProcessBeef());
+            }
+
+            Set(new[] { Options.C });
+            Console.WriteLine($"\nThe warehouse just processed {beefPile.Count} units of roast.\n");
 
             Set(new[] { Options.B });
+            beefPile.Clear();
 
-            Write($"The simple factory made: {leanBeef.Name} for ${leanBeef.Price}/lb\n");
-
+            Console.WriteLine("Done");
             Console.ReadLine();
         }
     }

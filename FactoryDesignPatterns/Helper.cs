@@ -7,28 +7,28 @@ namespace FactoryDesignPatterns
         public enum Options
         {
             Title,
-            Simple,
+            Method,
             G, C, B
         }
 
-        public const string SimpleWelcome = "This example follows a simple factory design pattern:\n";
+        public const string MethodWelcome = "This example follows the factory method design pattern";
 
         public static void Set(Options[] options, bool setTitle = false)
         {
             if (setTitle)
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine($"\n\t===============================\n" +
-                                    $"\t=  Frank's Ground Beef House  =\n" +
-                                    $"\t===============================");
+                Console.WriteLine($"\n\t========================\n" +
+                                    $"\t=  Frank's Meat House  =\n" +
+                                    $"\t========================\n");
             }
 
             foreach (var option in options)
             {
                 switch (option)
                 {
-                    case Options.Simple:
-                        Console.WriteLine(SimpleWelcome);
+                    case Options.Method:
+                        Console.WriteLine(MethodWelcome);
                         break;
 
                     case Options.G:
