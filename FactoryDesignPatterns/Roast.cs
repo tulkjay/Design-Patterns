@@ -1,18 +1,7 @@
-using static FactoryDesignPatterns.Helper;
-
 namespace FactoryDesignPatterns
 {
-    public class Roast : Beef
+    public abstract class Roast : Item
     {
-        public override string Name { get; set; } = "Roast";
-    }
-
-    public class RoastFactory : BeefFactory
-    {
-        public override Beef ProcessBeef()
-        {
-            Write("Cutting rump roast section"); ;
-            return new Roast();
-        }
+        public abstract string Cut { get; set; }
     }
 }
