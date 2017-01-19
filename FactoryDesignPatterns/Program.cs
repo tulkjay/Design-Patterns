@@ -10,6 +10,7 @@ namespace FactoryDesignPatterns
             Set(new[] { Options.G, Options.Simple }, true);
 
             var simpleFactory = new SimpleMeatFactory();
+
             var chuckBeef = simpleFactory.GetMeat(Grade.Chuck);
             var mediumBeef = simpleFactory.GetMeat(Grade.Medium);
             var leanBeef = simpleFactory.GetMeat(Grade.Lean);

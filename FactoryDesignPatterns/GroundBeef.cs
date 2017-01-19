@@ -1,6 +1,4 @@
-﻿using static FactoryDesignPatterns.Helper;
-
-namespace FactoryDesignPatterns
+﻿namespace FactoryDesignPatterns
 {
     public enum Grade
     {
