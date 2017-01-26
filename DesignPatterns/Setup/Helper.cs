@@ -1,25 +1,25 @@
-﻿using System;
+using System;
 
-namespace FactoryDesignPatterns
+namespace FactoryDesignPatterns.Setup
 {
     public static class Helper
     {
         public enum Options
         {
-            G, C, B
+            G, C, B, M, R, Y
         }
 
-        public const string AbstractWelcome = "This example follows the abstract factory design pattern";
+        public const string Welcome = "This example follows the builder design pattern";
 
         public static void Set(Options option, bool setTitle = false)
         {
             if (setTitle)
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine($"\n\t================\n" +
-                                    $"\t=  Meat World  =\n" +
-                                    $"\t================\n");
-                Console.WriteLine(AbstractWelcome);
+                Console.WriteLine($"\n\t================================\n" +
+                                    $"\t=  Frank's In And Out Burgers  =\n" +
+                                    $"\t================================\n");
+                Console.WriteLine(Welcome);
             }
 
             switch (option)
@@ -34,6 +34,18 @@ namespace FactoryDesignPatterns
 
                 case Options.B:
                     Console.ForegroundColor = ConsoleColor.Blue;
+                    break;
+
+                case Options.M:
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    break;
+
+                case Options.R:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    break;
+
+                case Options.Y:
+                    Console.ForegroundColor = ConsoleColor.Yellow;
                     break;
 
                 default:
