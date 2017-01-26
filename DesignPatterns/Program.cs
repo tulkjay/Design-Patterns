@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using static FactoryDesignPatterns.Setup.Helper;
+using static DesignPatterns.Setup.Helper;
 
 namespace DesignPatterns
 {

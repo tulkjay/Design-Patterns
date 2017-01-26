@@ -1,6 +1,6 @@
 using System;
 
-namespace FactoryDesignPatterns.Setup
+namespace DesignPatterns.Setup
 {
     public static class Helper
     {
