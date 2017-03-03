@@ -1,12 +1,12 @@
 using System;
 
-namespace FactoryDesignPatterns.Setup
+namespace DesignPatterns.Setup
 {
     public static class Helper
     {
         public enum Options
         {
-            G, C, B, M, R, Y
+            G, C, B, M, DR, Y
         }
 
         public const string Welcome = "This example follows the builder design pattern";
@@ -16,10 +16,12 @@ namespace FactoryDesignPatterns.Setup
             if (setTitle)
             {
                 Console.ForegroundColor = ConsoleColor.DarkRed;
-                Console.WriteLine($"\n\t================================\n" +
-                                    $"\t=  Frank's In And Out Burgers  =\n" +
-                                    $"\t================================\n");
-                Console.WriteLine(Welcome);
+                Console.Write("\n\t================================\n\t=  ");
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.Write("Frank's In And Out Burgers  ");
+                Console.ForegroundColor = ConsoleColor.DarkRed;
+                Console.Write("=\n\t================================\n\n");
+                Console.WriteLine(Welcome);                
             }
 
             switch (option)
@@ -40,8 +42,8 @@ namespace FactoryDesignPatterns.Setup
                     Console.ForegroundColor = ConsoleColor.Magenta;
                     break;
 
-                case Options.R:
-                    Console.ForegroundColor = ConsoleColor.Red;
+                case Options.DR:
+                    Console.ForegroundColor = ConsoleColor.DarkRed;
                     break;
 
                 case Options.Y:
