@@ -1,12 +1,20 @@
-﻿namespace Mediator.Core
+﻿using System;
+
+namespace Mediator.Core
 {
     public abstract class Person
     {
-        protected Core.Mediator Mediator;
+        protected Mediator Mediator;
 
-        protected Person(Core.Mediator mediator)
+        public int Id { get; set; }
+
+        public Role Role { get; set; }
+
+        protected Person(Mediator mediator)
         {
             Mediator = mediator;
         }
+
+        public abstract void Notify(string message, params object[] items);        
     }
 }

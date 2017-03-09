@@ -4,17 +4,29 @@ namespace Mediator.Core
 {
     public class Employee : Person
     {
-        public Employee(Core.Mediator mediator) : base(mediator)
+        public string Name { get; set; }
+
+        public Employee(string name, Mediator mediator) : base(mediator)
         {
+            Name = name;
+            Role = Role.Employee;
         }
+
         public void Send(string message)
         {
             Mediator.Send(message, this);
         }
 
-        public void Notify(string message)
+        public void SubmitTime(Timesheet timesheet)
         {
-            Console.WriteLine($"Employee received: {message}");
+            timesheet.WorkerName = Name;
+            timesheet.Date = DateTime.Now;
+            Mediator.Send(timesheet);
+        }
+
+        public override void Notify(string message, params object[] items)
+        {
+            Console.WriteLine($"Employee {Id} received: {message}");
         }
     }
 }
