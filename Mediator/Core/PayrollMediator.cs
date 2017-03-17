@@ -1,7 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Mediator.Setup;
-using static System.ConsoleColor;
 
 namespace Mediator.Core
 {
@@ -13,7 +13,7 @@ namespace Mediator.Core
 
         public override void Send(string message, Person person)
         {
-            Helper.Write($"{person.Role} {person.Id} sent: {message}\n", Yellow);
+            Helper.Write($"{person.Role} {person.Id} sent: {message}\n", ConsoleColor.Yellow);
 
             _recipients.Where(x => x.Id != person.Id)
                 .ToList()
