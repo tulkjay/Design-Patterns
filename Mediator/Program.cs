@@ -37,11 +37,14 @@ namespace Mediator
             Hr();
 
             timekeeper.PrintPayroll();
+
             Write("\nDone\n");
 
             if (Debugger.IsAttached)
+            {
                 Console.Write("Press Enter to exit... ");
-            Console.ReadLine();
+                Console.ReadLine();
+            }
         }
     }
 }

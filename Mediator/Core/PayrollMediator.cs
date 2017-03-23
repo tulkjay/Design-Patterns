@@ -24,7 +24,7 @@ namespace Mediator.Core
         {
             _recipients.Where(x => x.Role == Role.Timekeeper)
                 .ToList()
-                .ForEach(x => x.Notify("New timesheet", timesheet));
+                .ForEach(x => x.Notify($"{timesheet.WorkerName}'s timesheet", timesheet));
         }
 
         public void AddRecipient(Person person)
