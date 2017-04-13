@@ -45,7 +45,6 @@
     <Compile Include="Core\IDecorator.cs" />
     <Compile Include="Core\LogicDecorator.cs" />
     <Compile Include="Program.cs" />
-    <Compile Include="Core\RequestDecorator.cs" />
     <Compile Include="Core\ValidationDecorator.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Setup\Helper.cs" />
