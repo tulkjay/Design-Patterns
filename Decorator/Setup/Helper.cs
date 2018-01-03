@@ -5,15 +5,15 @@ namespace Decorator.Setup
     public static class Helper
     {
         public const string Welcome = "This example follows the decorator design pattern";
-
+        public static ConsoleColor CurrentConsoleColor;
         public static void SetTitle()
         {
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.Write("\n\t========================================\n\t=  ");
+            Console.Write("\n\t==============================================\n\t=  ");
             Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.Write(" Frank's Employee Registry System   ");
+            Console.Write(" Frank's RPG Character Training Academy   ");
             Console.ForegroundColor = ConsoleColor.DarkRed;
-            Console.Write("=\n\t========================================\n\n");
+            Console.Write("=\n\t==============================================\n\n");
             Console.WriteLine(Welcome);
             Set(ConsoleColor.Cyan);
             Console.WriteLine();
@@ -21,21 +21,19 @@ namespace Decorator.Setup
 
         public static void Set(ConsoleColor option)
         {
-            Console.ForegroundColor = option;
+            CurrentConsoleColor = option;
+            Console.ForegroundColor = CurrentConsoleColor;
         }
 
-        public static void Hr()
+        public static void Hr(bool newline = true)
         {
-            Console.WriteLine();
-            Write(string.Empty.PadLeft(70, '='));
-            Console.WriteLine();
+            Write(string.Empty.PadLeft(70, '=') + $"{(newline ? "\n" : "")}");
         }
 
-        public static void Write(string text, ConsoleColor startColor = ConsoleColor.Magenta, ConsoleColor endColor = ConsoleColor.Cyan)
+        public static void Write(string text = "\n", ConsoleColor? startColor = null)
         {
-            Set(startColor);
+            Set(startColor ?? CurrentConsoleColor);
             Console.WriteLine($"{text}");
-            Set(endColor);
         }
     }
 }

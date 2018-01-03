@@ -1,73 +1,80 @@
 using System;
 using System.Diagnostics;
-using Decorator.Core;
+using static System.ConsoleColor;
 using static Decorator.Setup.Helper;
 
 namespace Decorator
 {
-    public class Program
+    public static class Program
     {
-        private static readonly EmployeeRegistry Registry = EmployeeRegistry.GetInstance();
-        private static Employee _user;
-
         public static void Main()
         {
             SetTitle();
 
-            _user = Registry.Employees[80502];
+            Character rudy, maggie;
 
-            Write($"\tYou have logged in as {_user.Name}.\n", ConsoleColor.Blue);
+            Introduction(out rudy, out maggie);
 
-            Write("\tAttempting to get employee...", ConsoleColor.Yellow);
+            Write("Then they went to the Academy anddd...\n", Cyan);
 
-            var request = new GetRequest
-            {
-                User = _user,
-                IdToGet = 1
-            };
+            var mage = new MageDecorator(rudy);
+            var knight = new KnightDecorator(maggie);
 
-            MakeRequest(request);
+            Write($"{mage.Name} became a {mage.Title}!!?!\n");
+            mage.ShowBreakdown();
 
-            Write("\tUh oh, better opt out of authorization for now...\n", ConsoleColor.Yellow);
+            Write();
 
-            MakeRequest(request, false);
+            Write($"{knight.Name} became a {knight.Title}...  :O\n", Cyan);
+            knight.ShowBreakdown();
 
-            Write("\tAlright, using a valid employee id...\n", ConsoleColor.Yellow);
+            Write();
 
-            request.IdToGet = 98065;
+            PlotTwist(knight);
 
-            MakeRequest(request, false);
+            Write();
 
-            Write("\n\tDone\n");
+            SecondPlotTwist(mage);
 
             if (Debugger.IsAttached)
             {
-                Console.Write("Press Enter to exit... ");
+                Set(Cyan);
+                Write();
+                Write("Press Enter to exit... ", Cyan);
                 Console.ReadLine();
             }
         }
 
-        private static void MakeRequest(GetRequest request, bool withAuthorization = true)
+        private static void SecondPlotTwist(Character mage)
         {
-            Hr();
-            Write("\tMaking request...\n", ConsoleColor.Yellow);
-            var response = withAuthorization
-                ? new AuthorizationDecorator().Handle(request)
-                : new ValidationDecorator().Handle(request);
+            var villainKnight = new SuperVillainDecorator(new KnightDecorator(mage));
 
-            if (response.Success)
-            {
-                Hr();
-                Write("\tResponse received: \n", ConsoleColor.Yellow);
+            Write($"Another surprise twist: {mage.Name} turned evil, goes back to the academy and becomes a {villainKnight.Title}. BAMPH!\n", Yellow);
 
-                Write($"\tEmployee {request.IdToGet}\n" +
-                      $"\tId: {response.Employee.EmployeeId}\n" +
-                      $"\tName: {response.Employee.Name}", ConsoleColor.Green);
-            }
-            else
-            {
-                Write(response.Message, ConsoleColor.Red);
-            }
+            villainKnight.ShowBreakdown();
+        }
+
+        private static void PlotTwist(KnightDecorator knight)
+        {
+            var battleMage = new MageDecorator(knight);
+
+            Write($"Surprise twist: {knight.Name} goes back to the academy and becomes a {battleMage.Title}(battlemage)!??! WUUUUT\n", Yellow);
+
+            battleMage.ShowBreakdown();
+        }
+
+        private static void Introduction(out Character protagonistA, out Character protagonistB)
+        {
+            protagonistA = new CommonCharacter("Rutherford Cornelius Parrington");
+            protagonistB = new CommonCharacter("Magnus Stonewall");
+            Write($"In the beginning there were two normal people, {protagonistA.Name} and {protagonistB.Name}...", Cyan);
+            Write();
+
+            protagonistA.ShowBreakdown();
+            Write();
+            protagonistB.ShowBreakdown();
+
+            Write();
         }
     }
 }
