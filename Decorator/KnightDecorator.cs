@@ -1,5 +1,5 @@
-using System;
-using Decorator.Setup;
+using static System.ConsoleColor;
+using static Decorator.Setup.Helper;
 
 namespace Decorator
 {
@@ -30,10 +30,11 @@ namespace Decorator
         public override void ShowBreakdown()
         {
             base.ShowBreakdown();
-            Helper.Set(ConsoleColor.Red);
-            Helper.Write($"\tAdditional Inventory: {Helmet}, {Armor}, {Shield}.");
-            Helper.Write($"\tSpecial Attack: {SwordAttack()}.");
-            Helper.Write($"\tAdditional Defense: {Parry()}.");
+            Set(Red);
+            Write($"\tAdditional Inventory: {Helmet}, {Armor}, {Shield}.");
+            Write($"\tSpecial Attack: {SwordAttack()}.");
+            Write($"\tAdditional Defense: {Parry()}.");
+            Write();
         }
     }
 }

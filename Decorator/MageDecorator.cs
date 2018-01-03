@@ -1,5 +1,5 @@
-using System;
-using Decorator.Setup;
+using static System.ConsoleColor;
+using static Decorator.Setup.Helper;
 
 namespace Decorator
 {
@@ -23,9 +23,10 @@ namespace Decorator
         public override void ShowBreakdown()
         {
             base.ShowBreakdown();
-            Helper.Set(ConsoleColor.Red);
-            Helper.Write($"\tAdditional Inventory: {CoolHat}");
-            Helper.Write($"\tSpecial Attack: {CastFireball()}");
+            Set(Red);
+            Write($"\tAdditional Inventory: {CoolHat}");
+            Write($"\tSpecial Attack: {CastFireball()}");
+            Write();
         }
     }
 }

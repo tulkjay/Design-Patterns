@@ -30,7 +30,7 @@ namespace Decorator.Setup
             Write(string.Empty.PadLeft(70, '=') + $"{(newline ? "\n" : "")}");
         }
 
-        public static void Write(string text = "\n", ConsoleColor? startColor = null)
+        public static void Write(string text = "", ConsoleColor? startColor = null)
         {
             Set(startColor ?? CurrentConsoleColor);
             Console.WriteLine($"{text}");

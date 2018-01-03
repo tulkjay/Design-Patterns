@@ -15,20 +15,9 @@ namespace Decorator
 
             Introduction(out rudy, out maggie);
 
-            Write("Then they went to the Academy anddd...\n", Cyan);
+            Character mage, knight;
 
-            var mage = new MageDecorator(rudy);
-            var knight = new KnightDecorator(maggie);
-
-            Write($"{mage.Name} became a {mage.Title}!!?!\n");
-            mage.ShowBreakdown();
-
-            Write();
-
-            Write($"{knight.Name} became a {knight.Title}...  :O\n", Cyan);
-            knight.ShowBreakdown();
-
-            Write();
+            ToTheAcademy(rudy, maggie, out mage, out knight);
 
             PlotTwist(knight);
 
@@ -45,6 +34,23 @@ namespace Decorator
             }
         }
 
+        private static void ToTheAcademy(Character rudy, Character maggie, out Character mage, out Character knight)
+        {
+            Write("Then they went to the Academy anddd...\n", Cyan);
+
+            mage = new MageDecorator(rudy);
+            knight = new KnightDecorator(maggie);
+            Write($"{mage.Name} became a {mage.Title}!!?!\n");
+            mage.ShowBreakdown();
+
+            Write();
+
+            Write($"{knight.Name} became a {knight.Title}...  :O\n", Cyan);
+            knight.ShowBreakdown();
+
+            Write();
+        }
+
         private static void SecondPlotTwist(Character mage)
         {
             var villainKnight = new SuperVillainDecorator(new KnightDecorator(mage));
@@ -54,7 +60,7 @@ namespace Decorator
             villainKnight.ShowBreakdown();
         }
 
-        private static void PlotTwist(KnightDecorator knight)
+        private static void PlotTwist(Character knight)
         {
             var battleMage = new MageDecorator(knight);
 
