@@ -13,7 +13,7 @@ namespace Decorator.OrderDependent
             var items = new List<Item>
             {
                 new Item {Name = "Eggs", Price = 2.89, Weight = 3},
-                new Item {Name = "Toupé", Price = 3998.26, Weight = 1},
+                new Item {Name = "Toupée", Price = 3998.26, Weight = 1},
                 new Item {Name = "Cufflinks", Price = 2182.99, Weight = 6},
                 new Item {Name = "Shoes", Price = 59.99, Weight = 9},
                 new Item {Name = "Keyboard", Price = 89.99, Weight = 5},
