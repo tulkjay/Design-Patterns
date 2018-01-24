@@ -1,4 +1,4 @@
-namespace Design_Patterns
+namespace Decorator.OrderDependent
 {
   public abstract class Membership
   {

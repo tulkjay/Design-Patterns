@@ -1,14 +1,14 @@
+using System;
 using System.Collections.Generic;
+using Decorator.OrderDependent.Decorators;
+using static Decorator.OrderDependent.Setup.Helper;
 
-namespace Design_Patterns
+namespace Decorator.OrderDependent
 {
   public class DiscountManager
   {
-    private SaleDecorator _saleDecorator;
-    private ShippingDecorator _shippingDecorator;
-    private MembershipDecorator _membershipDecorator;
-    private List<Item> _items;
-    public List<IOrderDecorator> DecoratorList;
+    private MyCart _cart;
+    public List<IOrderDecorator> DecoratorList = new List<IOrderDecorator>();
 
     public DiscountManager(List<IOrderDecorator> decorators = null)
     {
@@ -16,28 +16,24 @@ namespace Design_Patterns
       {
         DecoratorList = decorators;
       }
-      else
-      {
-        DecoratorList = new List<IOrderDecorator>
-        {
-        };
-      }
     }
 
-    private string _analysis = "Analysis";
+    private void Process(IOrderDecorator decorator) {
+      var startingValue = _cart.Total;
+      Write("\nApplying: " + decorator.GetType().Name, ConsoleColor.Magenta);
+
+      _cart.Total = decorator.ProcessOrder(_cart.Total);
+
+      Console.WriteLine($"\nTotal changed from ${startingValue:0.00} to ${_cart.Total:0.00} ({(_cart.Total - startingValue):0.00})\n");
+    }
 
     public double ApplyDiscounts(MyCart cart)
     {
-      System.Console.WriteLine("Applying discounts in manager" + cart.StartingTotal);
-      DecoratorList.ForEach(x =>
-      {
-        cart.Total = x.ProcessOrder(cart.Total);
-      });
-      return cart.Total;
-    }
-    public void ReportAnalysis()
-    {
-      System.Console.WriteLine(_analysis);
+      _cart = cart;
+
+      DecoratorList.ForEach(Process);
+
+      return _cart.Total;
     }
   }
 }
