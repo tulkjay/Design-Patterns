@@ -1,52 +1,45 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using Decorator.OrderDependent.Decorators;
+using static Decorator.OrderDependent.Setup.Helper;
 
-namespace Design_Patterns
+namespace Decorator.OrderDependent
 {
-  public static class Program
-  {
-    public static void Main(string[] args)
+    public static class Program
     {
+        public static void Main()
+        {
+            var items = new List<Item>
+            {
+                new Item {Name = "Eggs", Price = 2.89, Weight = 3},
+                new Item {Name = "Toupé", Price = 3998.26, Weight = 1},
+                new Item {Name = "Cufflinks", Price = 2182.99, Weight = 6},
+                new Item {Name = "Shoes", Price = 59.99, Weight = 9},
+                new Item {Name = "Keyboard", Price = 89.99, Weight = 5},
+                new Item {Name = "Computer", Price = 2399.00, Weight = 20},
+            };
 
-        var cart = new MyCart(Global.StoreItems);
-        cart.Membership =  new GoldMembership();
+            SetTitle();
+            var cart = new MyCart(items)
+            {
+                Membership = new GoldMembership(),
+            };
 
-        var defaultDecoratorOrder = new List<IOrderDecorator> {
-            new MembershipDecorator(cart.Membership),
-            new SaleDecorator(cart.Items),
-            new ShippingDecorator(cart.Items),
-        };
-            
-        cart.SetDiscountOrder(defaultDecoratorOrder);
-        cart.Checkout();
+            var defaultDecoratorOrder = new List<IOrderDecorator>
+            {
+                new MembershipDecorator(cart.Membership),
+                new SaleDecorator(cart.Items),
+                new ShippingDecorator(cart.Items),
+            };
 
-        Console.WriteLine("Hello World!");
+            cart.SetDiscountOrder(defaultDecoratorOrder);
+            cart.Checkout();
+
+            if (Debugger.IsAttached)
+            {
+                Console.ReadLine();
+            }
+        }
     }
-  }
 }
-
-/*
-    Decorators: 
-        Membership discount
-        Weight discount
-        Sale discount
-
-    Add items to cart
-    Assign membership card
-    Checkout:
-        Give list of decorators for discount order
-            Default
-                Membership discount
-                    Apply correct card discount
-                    Apply cashback
-
-                Weight discount
-                    calculate cart weight
-                    Add cost
-
-                Sale discount
-                    If order is over certain $$, add discount
-                    If discount if over 10%, add free item
-
-    Manager takes decorator order, applies decorators, and returns total/prints report.
- */

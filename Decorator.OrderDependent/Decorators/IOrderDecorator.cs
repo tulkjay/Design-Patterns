@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-
-namespace Design_Patterns
+namespace Decorator.OrderDependent.Decorators
 {
   public interface IOrderDecorator
   {

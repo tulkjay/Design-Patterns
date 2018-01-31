@@ -1,29 +1,33 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using static Decorator.OrderDependent.Setup.Helper;
 
-namespace Design_Patterns
+namespace Decorator.OrderDependent.Decorators
 {
-  public class ShippingDecorator : IOrderDecorator
-  {
-    private const double ShippingPricePerPound = 0.15;
-    private List<Item> _items { get; set; }
-
-    public ShippingDecorator(List<Item> items)
+    public class ShippingDecorator : IOrderDecorator
     {
-        _items = items;
-    }
+        private const double ShippingPricePerPound = 12;
+        private List<Item> Items { get; set; }
 
-    public double ProcessOrder(double total)
-    {
-      Console.WriteLine("Processing shipping");
-      double weight = 0.0;
-      _items.ForEach(x => {
-        weight += x.Weight;
-      });
+        public ShippingDecorator(List<Item> items)
+        {
+            Items = items;
+        }
 
-      total += (weight * ShippingPricePerPound);
-      Console.WriteLine("discountedTotal in shipping " + total);
-      return total;
+        public double ProcessOrder(double total)
+        {
+            Set(ConsoleColor.Green);
+            Write($"\tProcessing shipping cost at ${ShippingPricePerPound:0.00} per pound");
+
+            var weight = 0;
+            weight = Items.Select(x => x.Weight).Aggregate((x, y) => x + y);
+            total += (weight * ShippingPricePerPound);
+
+            Write($"\tTotal Weight: {weight}");
+
+            Set(ConsoleColor.Cyan);
+            return total;
+        }
     }
-  }
 }

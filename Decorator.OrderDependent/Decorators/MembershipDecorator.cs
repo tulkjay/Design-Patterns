@@ -1,28 +1,33 @@
 using System;
+using static Decorator.OrderDependent.Setup.Helper;
 
-namespace Design_Patterns
+namespace Decorator.OrderDependent.Decorators
 {
-  public class MembershipDecorator : IOrderDecorator
-  {
-    private Membership _membership { get; set; }
-
-    public MembershipDecorator(Membership membership = null)
+    public class MembershipDecorator : IOrderDecorator
     {
-      _membership = membership;
-    }
+        private Membership Membership { get; set; }
 
-    public double ProcessOrder(double total)
-    {
-        Console.WriteLine("Processing membership " + total);
-        double discount = 0;
-
-        if(_membership != null) {
-            discount = _membership.Discount * total;
+        public MembershipDecorator(Membership membership = null)
+        {
+            Membership = membership;
         }
 
-        var discountedTotal = total - discount;
-        Console.WriteLine("discountedTotal in mem " + discountedTotal);
-        return discountedTotal;
+        public double ProcessOrder(double total)
+        {
+            Set(ConsoleColor.Yellow);
+            Write($"\tProcessing membership discount{(Membership != null ? $" for {Membership.Name} card (%{Membership.Discount*100})" : "")}");
+
+            double discount = 0;
+
+            if (Membership != null)
+            {
+                discount = Membership.Discount * total;
+            }
+
+            var discountedTotal = total - discount;
+
+            Set(ConsoleColor.Cyan);
+            return discountedTotal;
+        }
     }
-  }
 }
