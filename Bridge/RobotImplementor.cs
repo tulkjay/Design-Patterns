@@ -1,4 +1,5 @@
 ﻿using System;
+using Bridge.Setup;
 
 namespace Bridge
 {
@@ -26,7 +27,7 @@ namespace Bridge
 
         public void PrintSummary()
         {
-            Console.WriteLine($"\nTotal cost: {Total:0.00}\t Total Time: {TotalTime:0.00}");
+            Helper.Write($"\n\t\t Total Time: {TotalTime:#00.00}   Total Cost: {Total:$#00.00}", ConsoleColor.Yellow);
         }
     }
 }
