@@ -1,65 +1,69 @@
 ﻿using System;
 using System.Diagnostics;
 using Bridge.Setup;
+using static Bridge.Services;
 
 namespace Bridge
 {
-  public static class Program
-  {
-    static void Main()
+    public static class Program
     {
-      Helper.SetTitle();
+        public static void Main()
+        {
+            Helper.SetTitle();
 
-      /*
-        var chargingService = new CreditCustomerService();
-        chargingService.Service = new RoomOrderingService();
-        chargingService.Charge();
+            var serviceProvider = new ServiceProvider {Implementor = new HumanImplementor()};
 
-        chargingService.Service = new CheckoutService();
-        chargingService.Charge();
+            RunStandardService(serviceProvider);
 
-        var specializedService = new RoomServiceService();
-        specializedService.Charge();
+            serviceProvider.Implementor = new RobotImplementor();
+            RunStandardService(serviceProvider);
 
-        specializedService = new BreakfastInBedService();
-        specializedService.Charge();
+            var specializedServiceProvider = new SpecializedServiceProvider
+            {
+                Implementor = new HumanImplementor()
+            };
 
-        specializedService.Service = new CheckoutService();
-        specializedService.Charge();
-    */
+            RunSpecializedService(specializedServiceProvider);
 
-      //The bridge design pattern decouples an abstraction from its implementation so that the two can vary independently.
+            specializedServiceProvider.Implementor = new RobotImplementor();
 
-      if (Debugger.IsAttached)
-      {
-        Console.ReadLine();
-      }
+            RunSpecializedService(specializedServiceProvider);
+
+            if (Debugger.IsAttached)
+            {
+                Console.ReadLine();
+            }
+        }
+
+        private static void RunStandardService(ServiceProvider provider)
+        {
+            Console.WriteLine($"\nProviding {provider.Implementor.ImplementorType} standard services\n");
+            Console.WriteLine($"{"Service",-30}{"Time(min)",-20}Cost");
+            Helper.Hr(false);
+
+            StandardServiceList.ForEach(x =>
+            {
+                provider.ProvideService(x.Name, x.Time);
+                var cost = provider.GetCost(x.Cost);
+                Console.WriteLine($"\t\t  {cost:$0.00}");
+            });
+            provider.ShowResults();
+        }
+
+        private static void RunSpecializedService(SpecializedServiceProvider provider)
+        {
+            Console.WriteLine($"\nProviding {provider.Implementor.ImplementorType} specialized services\n");
+            Console.WriteLine($"{"Service", -30}{"Time(min)", -20}Cost");
+            Helper.Hr(false);
+
+            SpecializedServiceList.ForEach(x =>
+            {
+                provider.ProvideService(x.Name, x.Time);
+                provider.RequestRestock();
+                var cost = provider.GetCost(x.Cost);
+                Console.WriteLine($"\t\t  {cost:$0.00}");
+            });
+            provider.ShowResults();
+        }
     }
-  }
-
-  public abstract class ServiceProvider
-  {
-    public abstract void PerformService();
-  }
-  public class PayableServices
-  {
-    protected ServiceProvider _provider;
-    public ServiceProvider Provider
-    {
-      set { _provider = value; }
-    }
-
-    public virtual void Complete()
-    {
-      _provider.PerformService();
-    }
-  }
-
-  public class SpecializedServices : PayableServices
-  {
-    public override void Complete()
-    {
-      _provider.PerformService();
-    }
-  }
 }
